@@ -4,11 +4,18 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
+    this.div = container.querySelector('.status');
+    this.body = document.querySelector('body');
+    this.timerID;
 
     this.reset();
 
     this.registerEvents();
+
+    this.create();
   }
+
+
 
   reset() {
     this.setNewWord();
@@ -16,16 +23,38 @@ class Game {
     this.lossElement.textContent = 0;
   }
 
-  registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода символа вызываем this.success()
-      При неправильном вводе символа - this.fail();
-      DOM-элемент текущего символа находится в свойстве this.currentSymbol.
-     */
+  registerEvents() { 
+    document.addEventListener('keydown', (e) => {
+      if(e.key === this.currentSymbol.textContent){
+        this.success();
+      } else {
+        this.fail();
+      };
+  
+      console.log(this.currentSymbol.textContent)
+    });
+  };
+
+  create() {
+    let p = document.createElement('p');
+    p.innerHTML = `Осталось времени: <span class="status__timer"></span> секунд`
+    this.div.append(p)
   }
+
+  timer() {
+    clearInterval(this.timerID);
+    let time = Number(this.wordElement.textContent.length) + 1;
+    this.timerID = setInterval(() => {
+      if (time === 1) {
+        clearInterval(this.timerID);
+        this.fail();
+      };
+      time--;
+      document.querySelector('.status__timer').textContent = time;
+    }, 1000);
+  };
+
+  
 
   success() {
     if(this.currentSymbol.classList.contains("symbol_current")) this.currentSymbol.classList.remove("symbol_current");
@@ -54,8 +83,9 @@ class Game {
 
   setNewWord() {
     const word = this.getWord();
-
+    
     this.renderWord(word);
+    this.timer();
   }
 
   getWord() {
@@ -89,6 +119,34 @@ class Game {
     this.currentSymbol = this.wordElement.querySelector('.symbol_current');
   }
 }
+
+
+const div = document.querySelector('.status');
+const body = document.querySelector('body');
+
+function start() {
+  let div = document.createElement('main');
+  div.classList.add('content');
+  div.innerHTML = `
+     <div class="card">
+          <div id="game">
+              <div class="status">
+                  <p>
+                      Правильно введённых слов: <span class="status__wins">0</span>
+                  </p>
+                  <p>
+                      Неправильно введённых слов: <span class="status__loss">0</span>
+                  </p>
+              </div>
+              <div class="word">                  
+              </div>
+          </div> 
+      </div>
+  `;
+  body.append(div)
+};
+
+start();
 
 new Game(document.getElementById('game'))
 
