@@ -71,7 +71,4 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     })
 
-
-
- 
 });

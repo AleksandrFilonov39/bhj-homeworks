@@ -1,40 +1,32 @@
 window.addEventListener('DOMContentLoaded', () => {
     class Rotate {
         constructor (selector, selectorActiveClass) {
-            this.selector = document.querySelectorAll(selector),
+            this.selectors = document.querySelectorAll(selector),
             this.selectorActiveClass = selectorActiveClass,
             this.i = 0
         }
 
         rotate () {
-         
-            if (this.i === 0 ) {
-                this.selector[this.i].classList.add( this.selectorActiveClass)
-                this.selector[this.i].style.color = this.selector[this.i].dataset.color;
-                this.i++
-            } else if (this.i > 0 && this.i < this.selector.length) {
-                this.selector[this.i - 1].classList.remove( this.selectorActiveClass)
-                this.selector[this.i].classList.add( this.selectorActiveClass)
-                this.selector[this.i].style.color = this.selector[this.i].dataset.color;
-                this.i++;
-            } else {
-                this.selector[this.i - 1].classList.remove( this.selectorActiveClass)
+            
+            if(this.i === this.selectors.length){
+                this.selectors[this.i - 1].classList.remove( this.selectorActiveClass)
                 this.i = 0;
-                this.selector[this.i].classList.add( this.selectorActiveClass)
-                this.selector[this.i].style.color = this.selector[this.i].dataset.color;
-            }
-                console.log(this.selector[this.i])
-                console.log(this.i)
+            };
+            this.selectors[this.i].style.color = this.selectors[this.i].dataset.color;
+            if (this.i === 0 ) {
+                this.selectors[this.i].classList.add( this.selectorActiveClass)
+                this.i++
+            } else if (this.i > 0 && this.i < this.selectors.length) {
+                this.selectors[this.i - 1].classList.remove( this.selectorActiveClass)
+                this.selectors[this.i].classList.add( this.selectorActiveClass)
+                this.i++;
+            } 
         }
 
-        
         setIntervalTime () {
-            if (this.i === 0 ) {
-               return Number(this.selector[this.i].dataset.speed);
-                
-            } else if (this.i > 0 && this.i < this.selector.length) {
-                return Number(this.selector[this.i].dataset.speed);
-            } 
+            if(this.selectors[this.i]) {           
+            return Number(this.selectors[this.i].dataset.speed);
+            }
         }
 
         start () {
@@ -44,13 +36,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 this.rotate ();
             }, timeInterval);
         }
-
     }
 
     const rotate = new Rotate ('.rotator__case', 'rotator__case_active');
 
     rotate.start();
-    rotate.setIntervalTime();
 
 
 
@@ -61,6 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
 //         let i = 0;
 
 //     function rotate () {
+//         words[i].style.color = words[i].dataset.color;
 //         if (i === 0 ) {
 //             words[i].classList.add('rotator__case_active')
 //             i++
