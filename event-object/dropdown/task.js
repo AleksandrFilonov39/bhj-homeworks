@@ -3,12 +3,7 @@
  const dropLinks = document.querySelectorAll('.dropdown__link');
 
  btnDrop.addEventListener('click', () => {
-    if (!dropList.classList.contains('dropdown__list_active')){
-        dropList.classList.add('dropdown__list_active');
-       
-    } else {
-        dropList.classList.remove('dropdown__list_active')
-    }
+        dropList.classList.toggle('dropdown__list_active');
  });
 
  dropLinks.forEach(el => {

@@ -25,14 +25,21 @@ class Game {
 
   registerEvents() { 
     document.addEventListener('keydown', (e) => {
-      if(e.key === this.currentSymbol.textContent){
+
+      if(e.altKey || e.shiftKey || e.ctrlKey) {
+        console.log(e.altKey);
+        return;
+      } else
+
+{      if(e.key.toLocaleLowerCase() === this.currentSymbol.textContent){
         this.success();
       } else {
         this.fail();
       };
   
       console.log(this.currentSymbol.textContent)
-    });
+    }});
+  
   };
 
   create() {
@@ -41,18 +48,20 @@ class Game {
     this.div.append(p)
   }
 
-  timer() {
-    clearInterval(this.timerID);
-    let time = Number(this.wordElement.textContent.length) + 1;
-    this.timerID = setInterval(() => {
-      if (time === 1) {
-        clearInterval(this.timerID);
-        this.fail();
-      };
-      time--;
-      document.querySelector('.status__timer').textContent = time;
-    }, 1000);
-  };
+  // timer() {
+  //   clearInterval(this.timerID);
+  //   let time = Number(this.wordElement.textContent.length) + 1;
+  //   this.timerID = setInterval(() => {
+  //     if (time === 1) {
+  //       clearInterval(this.timerID);
+  //       this.fail();
+  //     };
+  //     time--;
+  //     document.querySelector('.status__timer').textContent = time;
+  //   }, 1000);
+
+
+  // };
 
   
 
@@ -85,7 +94,7 @@ class Game {
     const word = this.getWord();
     
     this.renderWord(word);
-    this.timer();
+    // this.timer();
   }
 
   getWord() {
