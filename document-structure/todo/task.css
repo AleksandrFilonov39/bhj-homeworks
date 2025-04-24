@@ -13,7 +13,7 @@ button {
 .tasks__control {
   display: flex;
   justify-content: space-between;
-}
+} 
 
 .tasks__input {
   display: block;
