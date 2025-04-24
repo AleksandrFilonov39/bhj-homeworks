@@ -2,9 +2,8 @@
  const input = document.querySelector('#task__input');
  const outList = document.querySelector('#tasks__list');
 
-
-
- let localStoreArr = localStorage.getItem('arr') ? localStorage.getItem('arr').split(',') : [];
+ let localStoreArr = localStorage.getItem('arr') ? JSON.parse(localStorage.getItem('arr')) : [];
+ console.log(localStoreArr)
 
  function creatreElement(textContentElement, inputPlace) {
     const div = document.createElement('div');
@@ -25,6 +24,7 @@
  form.addEventListener('submit', (e) => {
     e.preventDefault();
     let task = input.value;
+    task = task.trim();
     if(!task) {
         return;
     }
@@ -32,7 +32,7 @@
 
     localStorage.removeItem('arr', localStoreArr)
     localStoreArr.push(task)
-    localStorage.setItem('arr', localStoreArr)
+    localStorage.setItem('arr', JSON.stringify(localStoreArr))
  
     form.reset();
  });
@@ -45,11 +45,10 @@
         let ind = localStoreArr.indexOf(target.previousElementSibling.textContent);
         console.log(ind);
         localStoreArr = [...localStoreArr.slice(0, ind), ...localStoreArr.slice(ind + 1)]
-        localStorage.setItem('arr', localStoreArr)
+        localStorage.setItem('arr', JSON.stringify(localStoreArr))
         target.parentElement.remove();
     } else {return}
  });
-
 
  addOld ();
 

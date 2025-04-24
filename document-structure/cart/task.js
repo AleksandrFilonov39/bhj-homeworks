@@ -14,12 +14,12 @@ let obj = JSON.parse(localStorage.getItem('obj')) || {
 function renderBasket () {
     basket.innerHTML = '';
     for (let key in obj) {
-        if(obj[key]['bol']) {
+        if(obj[key].bol) {
             const div = document.createElement('div');
             div.innerHTML = `
-            <div class="cart__product" data-id=${obj[key]['id']}>
-                <img class="cart__product-image" src='${obj[key]['imgSrc']}'>
-                <div class="cart__product-count">${obj[key]['count']}</div>
+            <div class="cart__product" data-id=${obj[key].id}>
+                <img class="cart__product-image" src='${obj[key].imgSrc}'>
+                <div class="cart__product-count">${obj[key].count}</div>
             </div>
             `
             basket.append(div);
@@ -62,10 +62,10 @@ card.forEach((card) => {
             let srcImg = e.currentTarget.querySelector('img').getAttribute("src");
             let id = Number(e.currentTarget.dataset.id);
             let key = `id${id}`
-            count = obj[key]['bol'] ? obj[key]['count'] + count : count;
-            obj[key]['bol'] = true;
-            obj[key]['count'] = count;
-            obj[key]['imgSrc'] = srcImg;
+            count = obj[key].bol ? obj[key].count + count : count;
+            obj[key].bol = true;
+            obj[key].count = count;
+            obj[key].imgSrc = srcImg;
             console.log(srcImg)
             localStorage.setItem('obj', JSON.stringify(obj));
             renderBasket ();
@@ -80,8 +80,8 @@ function removeCard () {
             console.log('heloo')
             let id = Number(e.currentTarget.dataset.id);
             let key = `id${id}`
-            obj[key]['bol'] = false;
-            obj[key]['count'] = 0;
+            obj[key].bol = false;
+            obj[key].count = 0;
             localStorage.setItem('obj', JSON.stringify(obj));
             renderBasket ();
         })
