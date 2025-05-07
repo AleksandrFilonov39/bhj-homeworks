@@ -15,7 +15,7 @@ body {
 }
 
 .modal_active {
-  display: flex;
+  display: flex; 
 }
 
 .modal__close_times {
