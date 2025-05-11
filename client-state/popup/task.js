@@ -1,19 +1,18 @@
  const modal = document.querySelector('#subscribe-modal');
  const closeModal = document.querySelector('.modal__close');
 
- const openModal = localStorage.getItem('open');
+ function getCookie(name) {
+    var matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ))
+    return matches ? decodeURIComponent(matches[1]) : undefined
+};
 
- if (openModal && openModal === 'close') {
-    
- } else {
-    setTimeout(() => {
-        modal.classList.add('modal_active');
-        localStorage.setItem('open', 'open');
-     }, 2000);
-    
-    closeModal.addEventListener('click', () => {
-        localStorage.removeItem('open')
-        localStorage.setItem('open', 'close');
-        modal.classList.remove('modal_active');
-    })
- }
+!getCookie('modal') ? modal.classList.add('modal_active') : modal.classList.remove('modal_active');
+
+closeModal.addEventListener('click', () => {
+    let value = encodeURIComponent('show')
+    let updatedCookie = `modal=${value}`
+    document.cookie = updatedCookie
+    modal.classList.remove('modal_active');
+}); 
